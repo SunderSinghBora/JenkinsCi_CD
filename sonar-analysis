@@ -4,12 +4,12 @@ node{
    }
    stage('Compile-Package'){
       
-	  mvn clean package
+	  bat label: '', script: 'mvn clean package'
    }
    
    stage('SonarQube Analysis') {
        
-	   mvn sonar:sonar"
+	   bat label: '', script: 'mvn sonar:sonar'
         }
     }
    

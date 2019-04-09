@@ -1,7 +1,9 @@
 node{
+
    stage('SCM Checkout'){
      git 'https://github.com/SunderSinghBora/JenkinsCi_CD'
    }
+   
    stage('Compile-Package'){
       
 	  bat label: '', script: 'mvn clean package'
@@ -12,7 +14,3 @@ node{
 	   bat label: '', script: 'mvn sonar:sonar'
         }
     }
-   
-
-
-}

@@ -1,9 +1,7 @@
 node {
-    
-    
-    stage('checkout') {
-    
-    git 'https://github.com/SunderSinghBora/JenkinsCi_CD.git'
+
+        stage('checkout') {
+                git 'https://github.com/SunderSinghBora/JenkinsCi_CD.git'
 }
         
         stage('Build'){
@@ -14,10 +12,10 @@ node {
         stage('Archive'){
             
             archiveArtifacts artifacts: 'target/*.?ar',
-										onlyIfSuccessful: true
+					onlyIfSuccessful: true
         }
         
-		stage('Tests'){
+	stage('Tests'){
 		
 			step([
     			    $class: 'JUnitResultArchiver',
@@ -25,12 +23,12 @@ node {
 			    ])
 		}
 		
-		stage('Notification'){
+	stage('Notification'){
 		
 			emailext body: 'Test Complete', subject: 'Test Complete', to: 'sunder.bora@nagarro.com'
 		}
 		
-		stage('Codecoverage'){
+	stage('Codecoverage'){
 			
 			publishHTML([
 			                allowMissing: true,
@@ -42,5 +40,10 @@ node {
 			                reportTitles: ''
 			         ])
 		}
+        
+        stage('SonarQube Analysis') {
+       
+	   bat label: '', script: 'mvn sonar:sonar'
+        }
 	
 }
